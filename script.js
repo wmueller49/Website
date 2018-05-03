@@ -1,3 +1,4 @@
+
 //reveal .hideme elements when they enter the window
 function updateHideShow() {
 	$('.hideme').each( function(i) {
@@ -13,66 +14,52 @@ function updateHideShow() {
 //check to see if page's background color should be changed
 function updateBgs() {
 	var bottom_of_nav = $(window).scrollTop() + $('.nav').height();
-	var threshold = $(window).height();
+	var threshold = $(window).height() / 6;
 
-	if (bottom_of_nav > threshold) {
-		$('.nav').css({'opacity': '0', 'top': '-50px'});
+	if (bottom_of_nav > threshold && ($(window).width() >= 992)) {
+		$('.nav').css({'background-color': '#f4f4f4', 'height': '45px', 'top': '-7px'});
+		$('.nav li a').css({'color': 'black'});
 	} else if (bottom_of_nav < threshold) {
-		$('.nav').css({'opacity': '1', 'top': '0'});
-	}
-
-	if (bottom_of_nav > threshold * 2) {
-		$('body').css('background-color', '#eee');
-	} else if (bottom_of_nav < threshold * 2) {
-		$('body').css('background-color', 'var(--main-color)');
+		$('.nav').css({'background-color': 'transparent', 'height': '60px', 'top': '5px'});
+		$('.nav li a').css({'color': 'white'});
 	}
 }
 
 //set the jumbotron height to fill the screen
 //vertically center logo text if user is on dekstop
 function setJumbotronHeight() {
-	$screenHeight = $(window).height();
-	$('.main').css('height', $screenHeight + "px");
+	$scrHeight = $(window).outerHeight();
+	$scrWidth = $(window).outerWidth();
+	
+	$txtHeight = $("#main-text").height() / 1.95;
+	$txtWidth = $("#main-text").width() / 1.925;
 
-	$mainTextHeight = $('#main-text').height();
-	// $topMargin = (($screenHeight - ($mainTextHeight * 1.75)) / 2);
-	$topMargin = ($screenHeight / 2) - ($mainTextHeight / 1.5);
-
-	$('#main-text').css('margin-top', $topMargin + "px");
+	$("#main-text").css({'left': (($scrWidth / 2 - $txtWidth) + "px"), 'top': (($scrHeight / 2 - $txtHeight) + "px")});
 }
-
-//<3 easter eggs
-var code = [1, 2, 2, 1, 1, 2];
-var givenCode = [];
-
-function checkCode() {
-	var tempNumToCheck = givenCode[givenCode.length - 1];
-	for (var i = 0; i < givenCode.length; i++) {
-		if (givenCode[i] != code[i]) {
-			givenCode = [];
-		} else {
-			if (i == (code.length - 1)) {
-				//window.location.href = "1/2/3/4/shook/spooked.png";
-				window.location.href = "1/2/3/4/shook/sonic.jpeg";
-			}
-		}
-	}
-	if (tempNumToCheck == code[0] && givenCode.length == 0) {
-		givenCode.push(tempNumToCheck);
-	}
-}
-
-$('#scheduleLink').click(function() {
-	givenCode.push(1);
-	checkCode();
-});
-$('#faqLink').click(function() {
-	givenCode.push(2);
-	checkCode();
-});
 
 $(document).ready(function() {
+	$('#font').removeAttr("media");
+	$(".vid-container").css({'height': window.innerHeight+2 + "px"});
 	setJumbotronHeight();
+
+	if ($scrWidth > 767) {
+		$("#video").css({'min-width': '100%', 'min-height': '100%'})
+		$(".vid-container").css({'opacity': '0'}).animate({'opacity': '.99'}, 1500);
+	}
+	else {
+		var video = document.getElementById('video');
+		video.remove();
+		$(".vid-container").css({'margin-bottom': '40px'});
+		$('#wave1').wavify({
+			height: 200,
+			bones: 4,
+			amplitude: 90,
+			color: 'rgba(255,140,90,.3)',
+			speed: .15
+		  });
+		$(".wave-container").css({'opacity': '0'}).animate({'opacity': '.99'}, 7000);
+	}
+
 	updateHideShow();
 	updateBgs();
 	$('canvas').css({'width': $(window).width(), 'height': $(window).height() * 1.5});
@@ -83,7 +70,13 @@ $(document).ready(function() {
 	});
 
 	$(window).resize(function () {
-		setJumbotronHeight();
+		// Resize vid-container
+		if ($(window).outerWidth() <= 767) {
+			$(".vid-container").css({'margin-bottom': '40px'});
+		}
+		else {
+			$(".vid-container").css({'margin-bottom': '0px'});
+		}
 		$('canvas').css({'width': $(window).width(), 'height': $(window).height() * 1.5});
 	});
 
@@ -94,6 +87,6 @@ $(document).ready(function() {
 	    var target = this.hash;
 	    var $target = $(target);
 
-			$('html, body').stop().animate({'scrollTop': $target.offset().top - $target.height()}, 900, 'swing');
+			$('html, body').stop().animate({'scrollTop': $target.offset().top - $target.height() + 40}, 900, 'swing');
 	});
 });

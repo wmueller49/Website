@@ -1,10 +1,12 @@
 @font-face {
-  font-family: Jaapokki;
+	font-family: Jaapokki;
+	font-display: block;
   src: url('fonts/Jaapokki-Regular.otf'), url('/fonts/Jaapokki-Regular.otf');
 }
 
 @font-face {
-  font-family: Metrophobic;
+	font-family: Metrophobic;
+	font-display: block;
   src: url('fonts/Metrophobic.otf'), url('/fonts/Metrophobic.otf');
 }
 
@@ -18,7 +20,6 @@
     transform: none;
   }
 }
-
 
 
 /*ADD TRANSITION TO MAKETRANSLUCENT ITEMS*/
@@ -91,7 +92,7 @@ path {
 
 :root {
 	--main-color: #fc4d45;
-  --secondary-color: #306EFF;
+  --secondary-color: #3BB9FF;
   --third-color: #fc4d45;
 	--complement-color: rgb(180, 180, 180);
 
@@ -101,6 +102,7 @@ path {
 body {
   background: var(--main-color);
 	min-width: 440px;
+	overflow-x: hidden;
 }
 
 .hideme {
@@ -136,7 +138,8 @@ body {
 
 .nav a {
   color: #fff;
-  font: 1.4rem Montserrat;
+	font: 1.4rem Montserrat;
+	font-display: swap;
   text-transform: uppercase;
 	padding-right: 2em;
 }
@@ -149,6 +152,35 @@ body {
   display: inline;
 }
 
+#video {
+	margin-top: -68px;
+}
+
+.vid-container {
+	opacity: 0;
+}
+
+.overlay {
+	background-color: rgba(255, 179, 71, .3);
+	display: block;
+	position: absolute;
+	margin-top: -48px;
+	height: 100%;
+	width: 100%;
+}
+
+.wave-container {
+	opacity: 0;
+}
+
+.wave {
+  position: absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+	z-index: 0;
+}
 /**********PANELS**********/
 
 /*GENERAL*/
@@ -183,17 +215,14 @@ body {
 
 .main .row, .info .row, .faq .row, .sponsors .row, .map .row {
 	font-family: Montserrat, Metrophobic;
+	font-display: swap;
 	padding: 20px;
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
 
 .row h1 {
-	font-size: 6em;
-}
-
-.row h3 {
-	font-size: 1.5em;
+	font-size: 7rem;
 }
 
 /*MAIN*/
@@ -222,11 +251,13 @@ body {
 }
 
 .main h1 {
-	color: #fff;
+	color: #fbfbfb;
 	font-size: 20rem;
 	font-family: Jaapokki;
+	font-display: swap;
 	display: inline;
-	padding: 20px 20px 0 20px;
+
+	padding-bottom: -80px;
 	white-space: nowrap;
 	overflow: hidden;
 }
@@ -360,6 +391,17 @@ body {
   transition: transform 0.5s;
 }
 
+#main-text {
+	background: rgba(0,0,0,0);
+	color: var(--main-color);
+	position: absolute;
+	right: 0; bottom: 0; left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 2;
+}
+
 /*.sponsors .logos img:hover {
   transform: translate(-5px, -5px);
 }*/
@@ -368,6 +410,7 @@ body {
 .learn-more {
 	/*font-family: Consolas, 'Andale Mono', Helvetica, sans-serif;*/
 	font-family: Montserrat, Metrophobic;
+	font-display: swap;
   font-weight: bold;
 	text-align: center;
 	/*transition: background-color 0.4s;*/
@@ -421,20 +464,20 @@ body {
 	}
 
 	.row h1 {
-		font-size: 2.2em;
-	}
-
-	.row h3 {
-		font-size: 1.4em;
+		font-size: 3.4em;
 	}
 
 	.main .row {
 		padding-top: 20px;
-		padding-bottom: 20px;
+		padding-bottom: 0px; /*20*/
 	}
 
 	.main h1 {
-		font-size: 7rem;
+		font-size: 10rem;
+	}
+
+	#main-text {
+		top:-10%; /*-100*/
 	}
 
   #mobileSchedule {
@@ -443,18 +486,29 @@ body {
 
   #desktopSchedule, #scheduleScroll {
     display: none;
-  }
+	}
+
+	#video {
+		margin-top: -30px;
+	}
+	.vid-container {
+		opacity: 0;
+	}
 
 	/*.map #map {
 		height: 80vmin;
 	}*/
 
 	.sponsors h1 {
-		font-size: 1.4em;
+		font-size: 2.2em;
 	}
 
 	.sponsors .logos img {
 		max-height: 150px;
+	}
+
+	h2 {
+		font-size: 30px;
 	}
 }
 
@@ -469,8 +523,17 @@ body {
 	}
 
 	.main .row {
-		padding-bottom: 10em;
+		padding-bottom: 0em; /*10*/
 	}
+
+	#main-text {
+		top: -15%; /*-300*/
+	}
+
+	.main h1 {
+		font-size: 18rem;
+	}
+
 
   #mobileSchedule {
     display: inherit;
@@ -478,7 +541,11 @@ body {
 
   #desktopSchedule, #scheduleScroll {
     display: none;
-  }
+	}
+
+	#video {
+		margin-top: -50px;
+	}
 
 	/*.map #map {
 		height: 80vmin;
@@ -500,8 +567,13 @@ body {
 	}
 
 	.main .row {
-		padding-bottom: 10em;
+		padding-bottom: 0em; /*10*/
 	}
+
+	h3 {
+	font-size: 20px;
+	}
+
 
   #mobileSchedule {
     display: none;
